@@ -2,6 +2,7 @@ package model.expressions;
 
 import model.adt.dictionary.IGenericDictionary;
 import model.adt.exceptions.AppExceptions;
+import model.adt.heap.IHeap;
 import model.types.BoolType;
 import model.types.IType;
 import model.values.BoolValue;
@@ -19,33 +20,33 @@ public class LogicExpression implements IExpression {
     }
 
     @Override
-    public IValue evaluate(IGenericDictionary<String, IValue> table) throws AppExceptions {
+    public IValue evaluate(IGenericDictionary<String, IValue> table, IHeap myHeap) throws AppExceptions {
         if( operator != '|' && operator != '&')
             throw new AppExceptions("Logic operator not supported");
         IValue leftValue, rightValue;
-        leftValue = left.evaluate(table);
+        leftValue = left.evaluate(table, myHeap);
         if( leftValue instanceof BoolType )
         {
-            rightValue = right.evaluate(table);
+            rightValue = right.evaluate(table, myHeap);
             if( rightValue instanceof BoolType )
             {
                 BoolValue b1 = (BoolValue)rightValue;
                 BoolValue b2 = (BoolValue)leftValue;
                 boolean leftActualValue = b1.getValue();
                 boolean rightActualValue = b2.getValue();
-                switch(operator) {
-                    case '|': return new BoolValue(leftActualValue | rightActualValue);
-                    case '&': return new BoolValue(leftActualValue & rightActualValue);
-                }
+                return switch(operator) {
+                    case '|'-> new BoolValue(leftActualValue | rightActualValue);
+                    case '&' -> new BoolValue(leftActualValue & rightActualValue);
+                    default ->  throw new AppExceptions("operator not supported");
+                };
             }
             else {
                 throw new AppExceptions("Second operand in not of type bool!");
             }
         }
-        else{
-            throw new  AppExceptions("First operand is not of type bool!");
+        else {
+            throw new AppExceptions("First operand is not of type bool!");
         }
-        return null;
     }
 
     @Override

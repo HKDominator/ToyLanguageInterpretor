@@ -3,6 +3,7 @@ package model.expressions;
 import model.adt.dictionary.IGenericDictionary;
 import model.adt.exceptions.AppExceptions;
 import model.adt.exceptions.DivisionByZero;
+import model.adt.heap.IHeap;
 import model.types.IType;
 import model.types.IntType;
 import model.values.IValue;
@@ -20,15 +21,15 @@ public class ArithmeticExpression implements IExpression {
     }
 
     @Override
-    public IValue evaluate(IGenericDictionary<String, IValue> table) throws AppExceptions {
+    public IValue evaluate(IGenericDictionary<String, IValue> table, IHeap myHeap) throws AppExceptions {
         if( operator != '*' && operator != '+' && operator != '-' && operator != '/' ) {
             throw new AppExceptions("Arithmetic operator is not supported");
         }
 
         IValue rightValue, leftValue;
-        leftValue = left.evaluate(table);
+        leftValue = left.evaluate(table, myHeap);
         if(leftValue.getType().equals(new IntType())) {
-            rightValue = right.evaluate(table);
+            rightValue = right.evaluate(table, myHeap);
             if( rightValue.getType().equals(new IntType())) {
                 IntValue i1 = (IntValue) leftValue;
                 IntValue i2 = (IntValue) rightValue;

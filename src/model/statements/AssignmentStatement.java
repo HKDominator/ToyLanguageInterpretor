@@ -4,6 +4,7 @@ import model.adt.dictionary.IGenericDictionary;
 import model.adt.exceptions.AppExceptions;
 import model.adt.exceptions.NotDeclaredExpression;
 import model.adt.exceptions.TypeMismatch;
+import model.adt.heap.IHeap;
 import model.adt.stack.IGenericStack;
 import model.expressions.IExpression;
 import model.state.PrgState;
@@ -23,9 +24,10 @@ public class AssignmentStatement implements IStatement {
     public PrgState execute(PrgState state) throws AppExceptions {
         IGenericDictionary<String, IValue> symbolTable = state.getSymTable();
         IGenericStack<IStatement> executionStack = state.getExecutionStack();
+        IHeap heap = state.getMyHeap();
 
         if( symbolTable.is_defined(idOfVariable) ) {
-            IValue value = expressionToBeAssigned.evaluate(symbolTable);
+            IValue value = expressionToBeAssigned.evaluate(symbolTable, heap);
             IType typeOfVariable = symbolTable.lookup(idOfVariable).getType();
             if( value.getType().equals(typeOfVariable) ) {
                 symbolTable.insert(idOfVariable, value);

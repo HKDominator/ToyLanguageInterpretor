@@ -2,6 +2,7 @@ package model.expressions;
 
 import model.adt.dictionary.IGenericDictionary;
 import model.adt.exceptions.AppExceptions;
+import model.adt.heap.IHeap;
 import model.types.IType;
 import model.values.IValue;
 
@@ -15,7 +16,7 @@ public class ValueExpression implements IExpression {
     }
 
     @Override
-    public IValue evaluate(IGenericDictionary<String, IValue> table) throws AppExceptions {
+    public IValue evaluate(IGenericDictionary<String, IValue> table, IHeap myHeap) throws AppExceptions {
         return value;
     }
 

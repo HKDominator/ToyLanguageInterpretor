@@ -2,6 +2,7 @@ package model.adt.dictionary;
 
 import model.adt.exceptions.KeyNotFoundAppException;
 
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface    IGenericDictionary<K, V> {
     int size();
     boolean isEmpty();
     IGenericDictionary<K, V> deepCopy();
+    public Collection<V> getValues();
 }

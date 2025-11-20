@@ -14,7 +14,7 @@ public class StringValue implements IValue {
     }
 
     public StringValue(){
-        value = StringType.DEFAULT_VALUE;
+        value = "";
     }
 
     @Override

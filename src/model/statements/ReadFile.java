@@ -2,6 +2,7 @@ package model.statements;
 
 import model.adt.dictionary.IGenericDictionary;
 import model.adt.exceptions.AppExceptions;
+import model.adt.heap.IHeap;
 import model.expressions.IExpression;
 import model.state.PrgState;
 import model.types.IType;
@@ -25,14 +26,15 @@ public class ReadFile implements IStatement {
 
     @Override
     public PrgState execute(PrgState state) throws AppExceptions {
-       if( state.getSymTable().lookup(variableName) == null){
+        IValue value = state.getSymTable().lookup(variableName);
+        if( value == null){
            throw new AppExceptions("the variable " + variableName + " was not declared before");
        }
-       if( !state.getSymTable().lookup(variableName).getType().equals(new IntType())){
+       if( !value.getType().equals(new IntType())){
            throw new AppExceptions("the variable " + variableName + " is not of type int");
        }
-
-       IValue fileNameValue = fileNameExpression.evaluate(state.getSymTable());
+       IHeap heap = state.getMyHeap();
+       IValue fileNameValue = fileNameExpression.evaluate(state.getSymTable(), heap);
        if( !fileNameValue.getType().equals(new StringType()))
            throw new AppExceptions("the variable " + variableName + " is not of type string");
 

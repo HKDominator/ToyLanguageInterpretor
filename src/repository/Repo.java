@@ -4,6 +4,8 @@ import model.adt.dictionary.GenericDictionary;
 import model.adt.dictionary.IGenericDictionary;
 import model.adt.exceptions.AppExceptions;
 import model.adt.filetable.FileTable;
+import model.adt.heap.Heap;
+import model.adt.heap.IHeap;
 import model.adt.list.GenericList;
 import model.adt.list.IGenericList;
 import model.adt.stack.GenericStack;
@@ -47,8 +49,9 @@ public class Repo implements IRepo{
         IGenericDictionary<String, IValue> symbolTable = new GenericDictionary<String, IValue>();
         IGenericList<IValue> outputOfProgram = new GenericList<IValue>();
         FileTable fileTable = new FileTable();
+        IHeap myHeap =  new Heap();
 
-        PrgState programState = new PrgState(executionStack, symbolTable, outputOfProgram, fileTable, statement);
+        PrgState programState = new PrgState(executionStack, symbolTable, outputOfProgram, fileTable, myHeap, statement);
         listOfPrograms.add(programState);
     }
 
@@ -65,10 +68,8 @@ public class Repo implements IRepo{
     @Override
     public void logProgramStateToLogFile() throws AppExceptions {
         PrgState state = getCurrentProgram();
-        try{
-            PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));
+        try(PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))){
             logFile.println(state.toString());
-            logFile.close();
         }catch(IOException error)
         {
             throw new AppExceptions(error.getMessage());

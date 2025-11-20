@@ -4,6 +4,8 @@ import model.adt.dictionary.IGenericDictionary;
 import model.adt.exceptions.AppExceptions;
 import model.adt.exceptions.EmptyStack;
 import model.adt.filetable.FileTable;
+import model.adt.heap.Heap;
+import model.adt.heap.IHeap;
 import model.adt.list.IGenericList;
 import model.adt.stack.IGenericStack;
 import model.statements.IStatement;
@@ -15,14 +17,16 @@ public class PrgState {
     private IGenericList<IValue> output;
     private IStatement initialStatement;
     private FileTable fileTable;
+    private IHeap myHeap;
 
-    public PrgState(IGenericStack<IStatement> executionStack, IGenericDictionary<String, IValue> symTable, IGenericList<IValue> output, FileTable fileTable, IStatement statement) {
+    public PrgState(IGenericStack<IStatement> executionStack, IGenericDictionary<String, IValue> symTable, IGenericList<IValue> output, FileTable fileTable, IHeap myHeap, IStatement statement) {
         this.executionStack = executionStack;
         this.symTable = symTable;
         this.output = output;
         this.initialStatement = statement.deepCopy();
         this.executionStack.push(statement);
         this.fileTable =  fileTable;
+        this.myHeap = myHeap;
     }
 
     public void setExecutionStack(IGenericStack<IStatement> executionStack) {
@@ -49,6 +53,10 @@ public class PrgState {
         return fileTable;
     }
 
+    public IHeap getMyHeap() {
+        return this.myHeap;
+    }
+
     public IStatement getInitialStatement() {
         return initialStatement;
     }
@@ -70,6 +78,7 @@ public class PrgState {
         string.append("Execution stack:\n").append(executionStack.toString()).append("\n");
         string.append("Sym table:\n").append(symTable.toString()).append("\n");
         string.append("Output state:\n").append(output.toString()).append("\n");
+        string.append("Heap:\n").append(myHeap.toString()).append("\n");
         string.append("File table:\n").append(fileTable.toString()).append("\n");
         return string.toString();
     }

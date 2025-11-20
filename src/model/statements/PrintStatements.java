@@ -2,6 +2,7 @@ package model.statements;
 
 import model.adt.dictionary.IGenericDictionary;
 import model.adt.exceptions.AppExceptions;
+import model.adt.heap.IHeap;
 import model.expressions.IExpression;
 import model.state.PrgState;
 import model.types.IType;
@@ -16,7 +17,8 @@ public class PrintStatements implements IStatement {
 
     @Override
     public PrgState execute(PrgState state) throws AppExceptions {
-        state.getOutput().add(expression.evaluate(state.getSymTable()));
+        IHeap heap = state.getMyHeap();
+        state.getOutput().add(expression.evaluate(state.getSymTable(), heap));
         return state;
     }
 

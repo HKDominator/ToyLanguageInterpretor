@@ -78,6 +78,11 @@ public class GenericDictionary<K, V> implements IGenericDictionary<K, V> {
     }
 
     @Override
+    public Collection<V> getValues() {
+        return dictionary.values();
+    }
+
+    @Override
     public String toString() {
         StringBuilder print = new StringBuilder();
         for( K key : dictionary.keySet() ) {

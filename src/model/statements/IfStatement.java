@@ -2,6 +2,7 @@ package model.statements;
 
 import model.adt.dictionary.IGenericDictionary;
 import model.adt.exceptions.AppExceptions;
+import model.adt.heap.IHeap;
 import model.expressions.IExpression;
 import model.state.PrgState;
 import model.types.BoolType;
@@ -22,10 +23,11 @@ public class IfStatement implements IStatement{
 
     @Override
     public PrgState execute(PrgState state) throws AppExceptions {
-        if( !condition.evaluate(state.getSymTable()).getType().equals(new BoolType())){
+        IHeap heap = state.getMyHeap();
+        if( !condition.evaluate(state.getSymTable(), heap).getType().equals(new BoolType())){
             throw new AppExceptions("condition is not of type boolean");
         }
-        if(((BoolValue) condition.evaluate(state.getSymTable())).getValue())
+        if(((BoolValue) condition.evaluate(state.getSymTable(), heap)).getValue())
         {
             state.getExecutionStack().push(thenStatement);
         }

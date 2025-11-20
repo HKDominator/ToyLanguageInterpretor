@@ -3,6 +3,7 @@ package model.expressions;
 import model.adt.dictionary.IGenericDictionary;
 import model.adt.exceptions.AppExceptions;
 import model.adt.exceptions.TypeMismatch;
+import model.adt.heap.IHeap;
 import model.types.BoolType;
 import model.types.IType;
 import model.types.IntType;
@@ -22,31 +23,21 @@ public class RelationalExpression implements IExpression {
     }
 
     @Override
-    public IValue evaluate(IGenericDictionary<String, IValue> table) throws AppExceptions {
-        IValue leftValue = left.evaluate(table);
-        IValue rightValue = right.evaluate(table);
+    public IValue evaluate(IGenericDictionary<String, IValue> table, IHeap myHeap) throws AppExceptions {
+        IValue leftValue = left.evaluate(table, myHeap);
+        IValue rightValue = right.evaluate(table, myHeap);
         if( leftValue.getType().equals(rightValue.getType()) && leftValue.getType().equals(new IntType())){
             int leftValueInt = ((IntValue)leftValue).getValue();
             int rightValueInt = ((IntValue)rightValue).getValue();
-            if(operator.equals("==")){
-                return new BoolValue(leftValueInt == rightValueInt);
-            }
-            if(operator.equals("!=")){
-                return new BoolValue(leftValueInt != rightValueInt);
-            }
-            if(operator.equals("<")){
-                return new BoolValue(leftValueInt < rightValueInt);
-            }
-            if(operator.equals(">")){
-                return new BoolValue(leftValueInt > rightValueInt);
-            }
-            if(operator.equals(">=")){
-                return new BoolValue(leftValueInt >= rightValueInt);
-            }
-            if(operator.equals("<=")){
-                return new BoolValue(leftValueInt <= rightValueInt);
-            }
-            throw new AppExceptions("operator not supported");
+            return switch (operator) {
+                case "==" -> new BoolValue(leftValueInt == rightValueInt);
+                case "!=" -> new BoolValue(leftValueInt != rightValueInt);
+                case "<" -> new BoolValue(leftValueInt < rightValueInt);
+                case ">" -> new BoolValue(leftValueInt > rightValueInt);
+                case ">=" -> new BoolValue(leftValueInt >= rightValueInt);
+                case "<=" -> new BoolValue(leftValueInt <= rightValueInt);
+                default -> throw new AppExceptions("operator not supported");
+            };
         }
         else{
             throw new TypeMismatch("both operators should be of type int");

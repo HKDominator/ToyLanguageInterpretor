@@ -4,10 +4,10 @@ import model.values.IValue;
 import model.values.StringValue;
 
 public class StringType implements IType{
-    public static final String DEFAULT_VALUE = "";
+    public static final StringValue DEFAULT_VALUE = new StringValue("");
     @Override
     public IValue getDefaultValue() {
-        return new StringValue(DEFAULT_VALUE);
+        return DEFAULT_VALUE;
     }
 
     @Override
