@@ -48,6 +48,14 @@ public class Controller implements IController {
         return listOfAddresses;
     }
 
+    List<Integer> getWrongAddresses(Collection<IValue> symbolTableValues, Map<Integer, IValue> heap) {
+        List<Integer> listOfAddresses = new LinkedList<Integer>();
+        return symbolTableValues.stream()
+                .filter(value -> value instanceof ReferenceValue)
+                .map(value -> {ReferenceValue v1 = (ReferenceValue)value; return v1.getaddress();})
+                .collect(Collectors.toList());
+    }
+
     @Override
     public void doAllSteps(boolean flag) throws AppExceptions {
         PrgState programState = repo.getCurrentProgram();
@@ -67,6 +75,16 @@ public class Controller implements IController {
                             programState.getMyHeap().getContent()
                         )
                 );
+
+//                programState.getMyHeap().setContent(
+//                        garbageCollector(
+//                                getWrongAddresses(
+//                                        programState.getSymTable().getValues(),
+//                                        programState.getMyHeap().getContent()
+//                                ),
+//                                programState.getMyHeap().getContent()
+//                        )
+//                );
             }catch(AppExceptions e){
                 System.out.println(e.getMessage());
             }

@@ -6,7 +6,7 @@ import model.types.IntType;
 
 public class IntValue implements IValue {
     private int value;
-    /// add in general enum, implement the IGenericTable, post on github and send link, create a getprogram state for implement
+    /// add in general enum, implement the IGenericTable
     public IntValue()
     {
         this.value = 0;

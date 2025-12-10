@@ -166,12 +166,43 @@ public class Programs {
         IRepo repo6 = new Repo(ex6, "log6.txt");
         IController controller6 = new Controller(repo6);
 
+        IStatement ex7 = new ComposedStatements(
+                // Ref int v;
+                new VariableDeclarationStatement("v", new ReferenceType(new IntType())),
+                new ComposedStatements(
+                        // new(v, 20);
+                        new HeapAllocationStatement("v", new ValueExpression(new IntValue(20))),
+                        new ComposedStatements(
+                                // Ref Ref int a;
+                                new VariableDeclarationStatement("a", new ReferenceType(new ReferenceType(new IntType()))),
+                                new ComposedStatements(
+                                        // new(a, v);
+                                        new HeapAllocationStatement("a", new VariableExpression("v")),
+                                        new ComposedStatements(
+                                                // new(v, 30);
+                                                new HeapAllocationStatement("v", new ValueExpression(new IntValue(30))),
+                                                // print(rH(rH(a)));
+                                                new PrintStatements(
+                                                        new HeapReadingExpression(
+                                                                new HeapReadingExpression(new VariableExpression("a"))
+                                                        )
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+
+        IRepo repo7 = new Repo(ex7, "log7.txt");
+        IController controller7 = new Controller(repo7);
+
         initialStatementsControllers.add(controller1);
         initialStatementsControllers.add(controller2);
         initialStatementsControllers.add(controller3);
         initialStatementsControllers.add(controller4);
         initialStatementsControllers.add(controller5);
         initialStatementsControllers.add(controller6);
+        initialStatementsControllers.add(controller7);
     }
 
     public IController getStatementController(int idx){

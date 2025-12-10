@@ -31,6 +31,7 @@ public class Interpreter {
         menu.addCommand(new RunExample("4", "run forth example", programs.getStatementController(4)));
         menu.addCommand(new RunExample("5", "run fifth example", programs.getStatementController(5)));
         menu.addCommand( new RunExample("6", "run sixth example", programs.getStatementController(6)));
+        menu.addCommand( new RunExample("7", "run seventh example", programs.getStatementController(7)));
         menu.show();
     }
 }
