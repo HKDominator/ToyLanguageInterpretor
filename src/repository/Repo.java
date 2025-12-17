@@ -12,6 +12,7 @@ import model.adt.stack.GenericStack;
 import model.adt.stack.IGenericStack;
 import model.state.PrgState;
 import model.statements.IStatement;
+import model.types.IType;
 import model.values.IValue;
 
 import javax.management.InvalidApplicationException;
@@ -50,8 +51,12 @@ public class Repo implements IRepo{
         IGenericList<IValue> outputOfProgram = new GenericList<IValue>();
         FileTable fileTable = new FileTable();
         IHeap myHeap =  new Heap();
-
-
+        try{
+            statement.typecheck(new GenericDictionary<String, IType>());
+        }catch(AppExceptions e){
+            System.out.println(e.getMessage());
+            return;
+        }
         PrgState programState = new PrgState(executionStack, symbolTable, outputOfProgram, fileTable, myHeap, statement);
         listOfPrograms.add(programState);
     }

@@ -63,7 +63,7 @@ public class Programs {
         IStatement ex3 = new ComposedStatements(
                 new VariableDeclarationStatement("a", new BoolType()),
                 new ComposedStatements(
-                        new VariableDeclarationStatement("v", new IntType()),//
+                        new VariableDeclarationStatement("v", new BoolType()),//
                         new ComposedStatements(//
                                 new AssignmentStatement("a",
                                         new ValueExpression(new BoolValue(true))

@@ -6,6 +6,7 @@ import model.expressions.IExpression;
 import model.state.PrgState;
 import model.types.IType;
 import model.types.ReferenceType;
+import model.values.IValue;
 import model.values.ReferenceValue;
 
 public class HeapWritingStatement implements IStatement{
@@ -18,12 +19,15 @@ public class HeapWritingStatement implements IStatement{
     }
     @Override
     public PrgState execute(PrgState state) throws AppExceptions {
-        if( state.getSymTable().lookup(variableName) == null )
+//        if( state.getSymTable().lookup(variableName) == null )
+//            throw new AppExceptions("Variable " + variableName + " not found");
+        IValue val = state.getSymTable().lookup(variableName);
+        if (val == null)
             throw new AppExceptions("Variable " + variableName + " not found");
-        if( !(state.getSymTable().lookup(variableName).getType() instanceof ReferenceType ))
+        if( !(val.getType() instanceof ReferenceType ))
             throw new AppExceptions("Variable " + variableName + " is not of reference type");
 
-        int addressOfVariable = ((ReferenceValue)state.getSymTable().lookup(variableName)).getaddress();
+        int addressOfVariable = ((ReferenceValue)val).getaddress();
         if( state.getMyHeap().get(addressOfVariable) == null )
             throw new AppExceptions("the address of the variable is not a key in the heap");
 
