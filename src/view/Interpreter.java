@@ -25,13 +25,13 @@ public class Interpreter {
 
         TextMenu menu = new TextMenu();
         menu.addCommand( new ExitCommand("0", "exit"));
-        menu.addCommand( new RunExample("1", "run first example", programs.getStatementController(1)));
-        menu.addCommand( new RunExample("2", "run second example", programs.getStatementController(2)));
-        menu.addCommand( new RunExample("3", "run third example", programs.getStatementController(3)));
-        menu.addCommand(new RunExample("4", "run forth example", programs.getStatementController(4)));
-        menu.addCommand(new RunExample("5", "run fifth example", programs.getStatementController(5)));
-        menu.addCommand( new RunExample("6", "run sixth example", programs.getStatementController(6)));
-        menu.addCommand( new RunExample("7", "run seventh example", programs.getStatementController(7)));
+        menu.addCommand( new RunExample("1", "run first example", programs.getStatement(1)));
+        menu.addCommand( new RunExample("2", "run second example", programs.getStatement(2)));
+        menu.addCommand( new RunExample("3", "run third example", programs.getStatement(3)));
+        menu.addCommand(new RunExample("4", "run forth example", programs.getStatement(4)));
+        menu.addCommand(new RunExample("5", "run fifth example", programs.getStatement(5)));
+        menu.addCommand( new RunExample("6", "run sixth example", programs.getStatement(6)));
+        menu.addCommand( new RunExample("7", "run seventh example", programs.getStatement(7)));
         menu.show();
     }
 }

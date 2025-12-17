@@ -18,17 +18,15 @@ import repository.Repo;
 import java.util.LinkedList;
 
 public class Programs {
-    private LinkedList<IController> initialStatementsControllers;
+    private LinkedList<IStatement> initialStatements;
     public Programs(){
-        initialStatementsControllers = new LinkedList<>();
+        this.initialStatements = new LinkedList<>();
         IStatement ex1 = new ComposedStatements(
                 new VariableDeclarationStatement("v", new IntType()),
                 new ComposedStatements(
                         new AssignmentStatement("v", new ValueExpression(new IntValue(2))),
                         new PrintStatements(new VariableExpression("v"))
                 ));
-        IRepo repo1 = new Repo(ex1, "log1.txt");
-        IController controller1 = new Controller(repo1);
 
         IStatement ex2 = new ComposedStatements(
                 new VariableDeclarationStatement("a", new IntType()),
@@ -57,8 +55,6 @@ public class Programs {
                         )
                 )
         );
-        IRepo repo2 = new Repo(ex2, "log2.txt");
-        IController controller2 = new Controller(repo2);
 
         IStatement ex3 = new ComposedStatements(
                 new VariableDeclarationStatement("a", new BoolType()),
@@ -81,8 +77,6 @@ public class Programs {
                         )
                 )
         );
-        IRepo repo3 = new Repo(ex3, "log3.txt");
-        IController controller3 = new Controller(repo3);
 
         IStatement ex4 = new ComposedStatements(
                 new VariableDeclarationStatement("varf", new StringType()),
@@ -109,8 +103,7 @@ public class Programs {
                         )
                 )
         );
-        IRepo repo4 = new Repo(ex4, "log4.txt");
-        IController controller4 = new Controller(repo4);
+
 
         // Ref int v; new(v,20); Ref Ref int a; new(a,v); print(v); print(a)
         IStatement ex5 = new ComposedStatements(
@@ -136,9 +129,6 @@ public class Programs {
                 )
         );
 
-        IRepo repo5 = new Repo(ex5, "log5.txt");
-        IController controller5 = new Controller(repo5);
-
         IStatement ex6 = new ComposedStatements(
                 // int v;
                 new VariableDeclarationStatement("v", new IntType()),
@@ -162,9 +152,6 @@ public class Programs {
                         )
                 )
         );
-
-        IRepo repo6 = new Repo(ex6, "log6.txt");
-        IController controller6 = new Controller(repo6);
 
         IStatement ex7 = new ComposedStatements(
                 // Ref int v;
@@ -193,19 +180,16 @@ public class Programs {
                 )
         );
 
-        IRepo repo7 = new Repo(ex7, "log7.txt");
-        IController controller7 = new Controller(repo7);
-
-        initialStatementsControllers.add(controller1);
-        initialStatementsControllers.add(controller2);
-        initialStatementsControllers.add(controller3);
-        initialStatementsControllers.add(controller4);
-        initialStatementsControllers.add(controller5);
-        initialStatementsControllers.add(controller6);
-        initialStatementsControllers.add(controller7);
+        initialStatements.add(ex1);
+        initialStatements.add(ex2);
+        initialStatements.add(ex3);
+        initialStatements.add(ex4);
+        initialStatements.add(ex5);
+        initialStatements.add(ex6);
+        initialStatements.add(ex7);
     }
 
-    public IController getStatementController(int idx){
-        return initialStatementsControllers.get(idx - 1);
+    public IStatement getStatement(int idx){
+        return initialStatements.get(idx - 1);
     }
 }

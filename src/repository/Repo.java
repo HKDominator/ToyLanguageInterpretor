@@ -27,7 +27,7 @@ public class Repo implements IRepo{
     private List<PrgState> listOfPrograms;
     private int progamIndex;
     private String logFilePath;
-    public Repo(IStatement program, String logFilePath) {
+    public Repo(IStatement program, String logFilePath) throws AppExceptions {
         this.listOfPrograms = new ArrayList<PrgState>();
         this.logFilePath = logFilePath;
         addProgram(program);
@@ -45,18 +45,13 @@ public class Repo implements IRepo{
     }
 
     @Override
-    public void addProgram(IStatement statement) {
+    public void addProgram(IStatement statement) throws AppExceptions {
         IGenericStack<IStatement> executionStack = new GenericStack<IStatement>();
         IGenericDictionary<String, IValue> symbolTable = new GenericDictionary<String, IValue>();
         IGenericList<IValue> outputOfProgram = new GenericList<IValue>();
         FileTable fileTable = new FileTable();
         IHeap myHeap =  new Heap();
-        try{
-            statement.typecheck(new GenericDictionary<String, IType>());
-        }catch(AppExceptions e){
-            System.out.println(e.getMessage());
-            return;
-        }
+        statement.typecheck(new GenericDictionary<String, IType>());
         PrgState programState = new PrgState(executionStack, symbolTable, outputOfProgram, fileTable, myHeap, statement);
         listOfPrograms.add(programState);
     }

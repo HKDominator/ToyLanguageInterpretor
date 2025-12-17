@@ -11,7 +11,7 @@ import java.util.List;
 public interface IRepo {
     public List<PrgState> getListOfPrograms();
     public void setListOfPrograms(List<PrgState> listOfPrograms);
-    void addProgram(IStatement state);
+    void addProgram(IStatement state) throws AppExceptions;
     int size();
     PrgState getCurrentProgram();
     void logProgramStateToLogFile() throws AppExceptions;
