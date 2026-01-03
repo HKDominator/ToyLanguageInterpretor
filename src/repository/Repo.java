@@ -41,7 +41,7 @@ public class Repo implements IRepo{
 
     @Override
     public void setListOfPrograms(List<PrgState> listOfPrograms) {
-        this.listOfPrograms = listOfPrograms;
+        this.listOfPrograms = listOfPrograms;   
     }
 
     @Override
