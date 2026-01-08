@@ -41,7 +41,7 @@ public class Repo implements IRepo{
 
     @Override
     public void setListOfPrograms(List<PrgState> listOfPrograms) {
-        this.listOfPrograms = listOfPrograms;   
+        this.listOfPrograms = listOfPrograms;
     }
 
     @Override
@@ -67,10 +67,9 @@ public class Repo implements IRepo{
     }
 
     @Override
-    public void logProgramStateToLogFile() throws AppExceptions {
-        PrgState state = getCurrentProgram();
+    public void logProgramStateToLogFile(PrgState ps) throws AppExceptions {
         try(PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))){
-            logFile.println(state.toString());
+            logFile.println(ps.toString());
         }catch(IOException error)
         {
             throw new AppExceptions(error.getMessage());

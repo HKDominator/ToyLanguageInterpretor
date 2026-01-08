@@ -11,13 +11,17 @@ import model.adt.stack.IGenericStack;
 import model.statements.IStatement;
 import model.values.IValue;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class PrgState {
     private IGenericStack<IStatement> executionStack;
     private IGenericDictionary<String, IValue> symTable;
     private IGenericList<IValue> output;
-    private IStatement initialStatement;
-    private FileTable fileTable;
-    private IHeap myHeap;
+    private final IStatement initialStatement;
+    private final FileTable fileTable;
+    private final IHeap myHeap;
+    private static final AtomicInteger lastid = new AtomicInteger(-1);
+    private final Integer id;
 
     public PrgState(IGenericStack<IStatement> executionStack, IGenericDictionary<String, IValue> symTable, IGenericList<IValue> output, FileTable fileTable, IHeap myHeap, IStatement statement) {
         this.executionStack = executionStack;
@@ -27,6 +31,7 @@ public class PrgState {
         this.executionStack.push(statement);
         this.fileTable =  fileTable;
         this.myHeap = myHeap;
+        this.id = lastid.incrementAndGet();
     }
 
     public void setExecutionStack(IGenericStack<IStatement> executionStack) {
@@ -57,6 +62,10 @@ public class PrgState {
         return this.myHeap;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public IStatement getInitialStatement() {
         return initialStatement;
     }
@@ -65,22 +74,21 @@ public class PrgState {
         return output;
     }
 
-    public boolean isCompleted()
-    {
-        return this.executionStack.isEmpty();
+    public boolean isNotCompleted(){
+        return !executionStack.isEmpty();
     }
 
     @Override
     public String toString()
     {
-        StringBuilder string = new StringBuilder();
-        string.append("Program state\n");
-        string.append("Execution stack:\n").append(executionStack.toString()).append("\n");
-        string.append("Sym table:\n").append(symTable.toString()).append("\n");
-        string.append("Output state:\n").append(output.toString()).append("\n");
-        string.append("Heap:\n").append(myHeap.toString()).append("\n");
-        string.append("File table:\n").append(fileTable.toString()).append("\n");
-        return string.toString();
+        String string = id.toString() + '\n' +
+                "Program state\n" +
+                "Execution stack:\n" + executionStack.toString() + "\n" +
+                "Sym table:\n" + symTable.toString() + "\n" +
+                "Output state:\n" + output.toString() + "\n" +
+                "Heap:\n" + myHeap.toString() + "\n" +
+                "File table:\n" + fileTable.toString() + "\n";
+        return string;
     }
 
     public PrgState executeOneStep() throws AppExceptions
@@ -93,5 +101,10 @@ public class PrgState {
         return statement.execute(this);
     }
 
-
+    public PrgState doOneStep() throws AppExceptions {
+        if (executionStack.isEmpty())
+            throw new AppExceptions("The execution stack is empty");
+        IStatement statement = executionStack.pop();
+        return statement.execute(this);
+    }
 }

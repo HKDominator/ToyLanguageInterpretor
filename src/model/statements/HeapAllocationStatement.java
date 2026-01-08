@@ -34,7 +34,7 @@ public class HeapAllocationStatement implements IStatement {
         myHeap.put(expression.evaluate(state.getSymTable(),myHeap));
 
         state.getSymTable().insert(variableName, new ReferenceValue(myHeap.getLastAddressGenerated(),expression.evaluate(state.getSymTable(),myHeap).getType()));
-        return state;
+        return null;
     }
 
     @Override

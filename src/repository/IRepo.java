@@ -14,5 +14,5 @@ public interface IRepo {
     void addProgram(IStatement state) throws AppExceptions;
     int size();
     PrgState getCurrentProgram();
-    void logProgramStateToLogFile() throws AppExceptions;
+    void logProgramStateToLogFile(PrgState ps) throws AppExceptions;
 }

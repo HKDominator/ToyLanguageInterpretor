@@ -43,7 +43,7 @@ public class OpenReadFile implements IStatement{
         }else{
             throw new AppExceptions("The file name is not a string!");
         }
-        return state;
+        return null;
     }
 
     @Override

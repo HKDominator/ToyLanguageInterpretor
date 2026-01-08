@@ -19,7 +19,7 @@ public class ComposedStatements implements IStatement {
     public PrgState execute(PrgState state) {
         state.getExecutionStack().push(secondStatement);
         state.getExecutionStack().push(firstStatement);
-        return state;
+        return null;
     }
 
     @Override

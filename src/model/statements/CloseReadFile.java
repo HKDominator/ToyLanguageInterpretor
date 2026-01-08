@@ -37,7 +37,7 @@ public class CloseReadFile implements IStatement{
             throw new AppExceptions(error.getMessage());
         }
         state.getFileTable().remove(filename);
-        return state;
+        return null;
     }
 
     @Override

@@ -40,7 +40,7 @@ public class AssignmentStatement implements IStatement {
         else{
             throw new NotDeclaredExpression("the used expression " + idOfVariable + " was not declared before");
         }
-        return state;
+        return null;
     }
 
     @Override

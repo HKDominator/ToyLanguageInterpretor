@@ -20,7 +20,7 @@ public class VariableDeclarationStatement implements IStatement {
             throw new AppExceptions("Variable already declared");
         }
         state.getSymTable().insert(variableName, variableType.getDefaultValue());
-        return state;
+        return null;
     }
 
     @Override

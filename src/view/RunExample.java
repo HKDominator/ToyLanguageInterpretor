@@ -10,7 +10,6 @@ import repository.Repo;
 public class RunExample extends Command {
     private IStatement statement;
     private static int idx = 0;
-    boolean flag = true;
 
 
     public RunExample(String key, String description, IStatement controller) {
@@ -24,7 +23,7 @@ public class RunExample extends Command {
             IRepo repo = new Repo(this.statement, "output" + idx + ".txt");
             IController controller = new Controller(repo);
             idx++;
-            controller.doAllSteps(flag);
+            controller.doAllSteps();
         }catch(AppExceptions e){
             System.out.println(e.getMessage());
         }

@@ -19,7 +19,7 @@ public class PrintStatements implements IStatement {
     public PrgState execute(PrgState state) throws AppExceptions {
         IHeap heap = state.getMyHeap();
         state.getOutput().add(expression.evaluate(state.getSymTable(), heap));
-        return state;
+        return null;
     }
 
     @Override

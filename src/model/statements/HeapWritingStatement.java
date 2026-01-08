@@ -39,7 +39,7 @@ public class HeapWritingStatement implements IStatement{
 
         state.getMyHeap().changeValue(addressOfVariable, newValue.evaluate(state.getSymTable(), state.getMyHeap()));
 
-        return state;
+        return null;
     }
 
     @Override

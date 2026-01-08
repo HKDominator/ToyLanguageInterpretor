@@ -60,7 +60,7 @@ public class ReadFile implements IStatement {
            readValue = new IntValue(Integer.parseInt(line));
        }
        state.getSymTable().insert(variableName, readValue);
-       return state;
+       return null;
     }
 
     @Override

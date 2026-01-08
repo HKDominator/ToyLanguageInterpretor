@@ -29,7 +29,7 @@ public class WhileStatement implements IStatement {
             stack.push(this.deepCopy());
             stack.push(this.body.deepCopy());
         }
-        return  state;
+        return null;
     }
 
     @Override

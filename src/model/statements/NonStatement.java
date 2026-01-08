@@ -8,7 +8,7 @@ import model.types.IType;
 public class NonStatement implements IStatement {
     @Override
     public PrgState execute(PrgState state) throws AppExceptions {
-        return state;
+        return null;
     }
 
     @Override
